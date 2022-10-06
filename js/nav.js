@@ -37,9 +37,12 @@ function updateNavOnLogin() {
   $navUserProfile.text(`${currentUser.username}`).show();
 }
 
+//TODO: add docstring
+
+/** navAddStoryClick: shows submit form above story list upon click  */
 function navAddStoryClick(evt) {
   evt.preventDefault();
-  hidePageComponents();
+  // hidePageComponents();
   $submitStoryForm.show();
 }
 
