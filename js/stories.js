@@ -51,13 +51,26 @@ function putStoriesOnPage() {
   $allStoriesList.show();
 }
 
-function putSubmittedStoryOnPage() {
+/** putSubmittedStoryOnPage: upon clicking, prepends new story to top of story
+ * list and hides submit form
+*/
+async function putSubmittedStoryOnPage(evt) {
+  evt.preventDefault();
+  //TODO: remove input in variable names since representing val and move to main.js
   const authorInput = $("#authorInput").val();
   const urlInput = $("#urlInput").val();
   const titleInput = $("#titleInput").val();
-  console.log(authorInput, urlInput, titleInput);
+  // console.log(authorInput, urlInput, titleInput);
+  const newStory = await storyList.addStory(
+    currentUser,
+    { title: titleInput, author: authorInput, url: urlInput }
+  );
+  //TODO: move const variable to main.js
+  const $newStory = generateStoryMarkup(newStory);
 
-  storyList.addStory(currentUser, { "title": titleInput, "author": authorInput, "url": urlInput });
+  $allStoriesList.prepend($newStory);
+  $submitStoryForm.hide();
+
 }
 
 $("#submitStory").on('click', putSubmittedStoryOnPage);
