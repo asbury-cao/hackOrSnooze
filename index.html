@@ -41,6 +41,19 @@
     </div>
   </nav>
 
+  <!-- Add story form -->
+  <form action="" id="submitStory-form" class="hidden account-form">
+    <!-- TODO: add header for creating new story -->
+    <h4>Submit story</h4>
+    <label for="author">author</label>
+    <input type="text" name="author" id="authorInput">
+    <label for="title">title</label>
+    <input type="text" name="title" id="titleInput">
+    <label for="url">url</label>
+    <input type="text" name="url" id="urlInput">
+    <button id="submitStory">submit</button>
+  </form>
+
   <!-- area for stories (all stories, user stories, favorites) -->
   <section class="stories-container container">
 
@@ -89,16 +102,7 @@
     </form>
   </section>
 
-  <!-- Add story form -->
-  <form action="" id="submitStory-form" class="hidden account-form">
-    <label for="author">author</label>
-    <input type="text" name="author" id="authorInput">
-    <label for="title">title</label>
-    <input type="text" name="title" id="titleInput">
-    <label for="url">url</label>
-    <input type="text" name="url" id="urlInput">
-    <button id="submitStory">submit</button>
-  </form>
+
 
   <!-- Library JS & our JS -->
   <script src="https://unpkg.com/jquery"></script>
