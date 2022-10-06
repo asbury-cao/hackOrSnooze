@@ -24,8 +24,7 @@ class Story {
   /** Parses hostname out of URL and returns it. */
 
   getHostName() {
-    // UNIMPLEMENTED: complete this function!
-    return "hostname.com";
+    return new URL(this.url).hostname;
   }
 }
 
@@ -61,7 +60,7 @@ class StoryList {
 
     // turn plain old story objects from API into instances of Story class
     const stories = response.data.stories.map(story => new Story(story));
-
+    console.log(stories);
     // build an instance of our own class using the new array of stories
     return new StoryList(stories);
   }
@@ -73,16 +72,18 @@ class StoryList {
    * Returns the new Story instance
    */
 
+
   async addStory(user, newStory) {
     console.log("I am in addStory");
     //add story data to API
-    const config = { token: user.loginToken, story: newStory };
-    const newStoryPostApiResponse = await axios.post(`${BASE_URL}/stories`, config);
-    const { author, createdAt, storyId, title, url, username } = newStoryPostApiResponse.data.story;
+    const data = { token: user.loginToken, story: newStory };
+    const response = await axios.post(`${BASE_URL}/stories`, data);
+    const { author, createdAt, storyId, title, url, username } =
+      response.data.story;
     //make a story instance
     const newStoryInstance = new Story({ storyId, title, author, url, username, createdAt });
     //add it to the story list
-
+    this.stories.unshift(newStoryInstance);
     //return the new story
     return newStoryInstance;
   }
