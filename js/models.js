@@ -74,12 +74,17 @@ class StoryList {
    */
 
   async addStory(user, newStory) {
+    console.log("I am in addStory");
+    //add story data to API
     const config = { token: user.loginToken, story: newStory };
     const newStoryPostApiResponse = await axios.post(`${BASE_URL}/stories`, config);
-    // console.log(newStoryPostApiResponse);
     const { author, createdAt, storyId, title, url, username } = newStoryPostApiResponse.data.story;
-    // UNIMPLEMENTED: complete this function!
-    return new Story({ storyId, title, author, url, username, createdAt });
+    //make a story instance
+    const newStoryInstance = new Story({ storyId, title, author, url, username, createdAt });
+    //add it to the story list
+
+    //return the new story
+    return newStoryInstance;
   }
 }
 
