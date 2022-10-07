@@ -77,6 +77,7 @@ class StoryList {
     console.log("I am in addStory");
     //add story data to API
     const data = { token: user.loginToken, story: newStory };
+    console.log("data", data);
     const response = await axios.post(`${BASE_URL}/stories`, data);
     const { author, createdAt, storyId, title, url, username } =
       response.data.story;
@@ -202,6 +203,25 @@ class User {
     } catch (err) {
       console.error("loginViaStoredCredentials failed", err);
       return null;
+    }
+  }
+
+  async addFavorite(selectedStory) {
+    if (selectedStory instanceof Story) {
+      const data = { token: currentUser.loginToken };
+      const response = await axios.post(
+        `${BASE_URL}/users/${currentUser.username}/favorites/${selectedStory.storyId}`, data
+      );
+      console.log(response.data);
+    }
+  }
+
+  async removeFavorite(selectedStory) {
+    if (selectedStory instanceof Story) {
+      const data = { data: { token: currentUser.loginToken } };
+      const response = await axios.delete(
+        `${BASE_URL}/users/${currentUser.username}/favorites/${selectedStory.storyId}`, data
+      );
     }
   }
 }
