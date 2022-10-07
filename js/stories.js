@@ -23,11 +23,31 @@ async function getAndShowStoriesOnStart() {
 
 function generateStoryMarkup(story) {
   // console.debug("generateStoryMarkup", story);
+  let starIconHTML = "";
+  let storyIsAFavorite = false;
+
+  if (currentUser) {
+    for (const favorite of currentUser.favorites) {
+      if (story.storyId === favorite.storyId) {
+        storyIsAFavorite = true; //the clicked story is already a favorite
+        break;
+      }
+    }
+  }
+
+  if (currentUser !== undefined && !storyIsAFavorite) {
+    starIconHTML = "<i id=\"star-button\" class=\"bi bi-star\"></i>";
+  } else if (currentUser !== undefined && storyIsAFavorite) {
+    starIconHTML = "<i id=\"star-button\" class=\"bi bi-star-fill\"></i>";
+  } else if (currentUser === undefined) {
+    starIconHTML = "";
+  }
 
   const hostName = story.getHostName();
+
   return $(`
       <li id="${story.storyId}">
-      <span class="star-icon"><i id='star-button' class="bi bi-star"></i></span>
+      <span class="star-icon">${starIconHTML}</span>
         <a href="${story.url}" target="a_blank" class="story-link">
           ${story.title}
         </a>
