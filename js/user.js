@@ -114,3 +114,28 @@ function updateUIOnUserLogin() {
   $allStoriesList.show();
   updateNavOnLogin();
 }
+
+// Favorites functionality
+async function updateUIonFavorites(evt) {
+  evt.preventDefault();
+  const currFavorites = await currentUser.getFavorites();
+  console.log(evt.target);
+  const storyId = $(evt.target).closest("li").attr("id");
+  console.log("storyid", storyId);
+  const title = $(evt.target).find(".story-link").first();
+  console.log("title", title);
+  // const author;
+  // const url;
+  // const username;
+  // const createdAt;
+
+  // const story = Story.newStory({});
+  //{storyId, title, author, url, username, createdAt}
+  if (currFavorites.includes(storyId)) {
+    console.log("i am already favorite");
+    // currentUser.removeFavorite();
+  } else {
+    console.log("i'm not a favorite yet");
+  }
+}
+$(".stories-list").on('click', $(".star-icon"), updateUIonFavorites);
