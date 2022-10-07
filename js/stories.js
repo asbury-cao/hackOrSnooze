@@ -25,7 +25,7 @@ function generateStoryMarkup(story) {
   const hostName = story.getHostName();
   return $(`
       <li id="${story.storyId}">
-      <i class="bi bi-star"></i>
+      <a href="" class="star-icon"><i class="bi bi-star"></i></a>
         <a href="${story.url}" target="a_blank" class="story-link">
           ${story.title}
         </a>
