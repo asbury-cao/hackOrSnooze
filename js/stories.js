@@ -56,21 +56,21 @@ function putStoriesOnPage() {
 */
 async function putSubmittedStoryOnPage(evt) {
   evt.preventDefault();
-  //TODO: remove input in variable names since representing val and move to main.js
-  const authorInput = $("#authorInput").val();
-  const urlInput = $("#urlInput").val();
-  const titleInput = $("#titleInput").val();
-  // console.log(authorInput, urlInput, titleInput);
+
+  const author = $authorInput.val();
+  const url = $urlInput.val();
+  const title = $titleInput.val();
+
+  console.log(author, url, title);
   const newStory = await storyList.addStory(
     currentUser,
-    { title: titleInput, author: authorInput, url: urlInput }
+    { title: title, author: author, url: url }
   );
-  //TODO: move const variable to main.js
+
   const $newStory = generateStoryMarkup(newStory);
 
   $allStoriesList.prepend($newStory);
   $submitStoryForm.hide();
-
 }
 
 $("#submitStory").on('click', putSubmittedStoryOnPage);
