@@ -11,6 +11,7 @@ function navAllStories(evt) {
   evt.preventDefault();
   hidePageComponents();
   putStoriesOnPage();
+  $allFavoritesList.hide();
 }
 
 $body.on("click", "#nav-all", navAllStories);
@@ -37,7 +38,6 @@ function updateNavOnLogin() {
   $navUserProfile.text(`${currentUser.username}`).show();
 }
 
-//TODO: add docstring
 
 /** navAddStoryClick: shows submit form above story list upon click  */
 function navAddStoryClick(evt) {
@@ -47,3 +47,13 @@ function navAddStoryClick(evt) {
 }
 
 $navSubmitStory.on("click", navAddStoryClick);
+
+
+function navShowFavoritesList(evt) {
+  evt.preventDefault();
+  updateFavoritesUI();
+  $allStoriesList.hide();
+  $allFavoritesList.show();
+}
+
+$navFavorites.on('click', navShowFavoritesList);
