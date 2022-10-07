@@ -111,10 +111,9 @@ function updateUIOnUserLogin() {
   console.debug("updateUIOnUserLogin");
   $loginForm.hide();
   $signupForm.hide();
+  putStoriesOnPage();
   $allStoriesList.show();
   updateNavOnLogin();
-  $starIcons.show();
-  console.log($starIcons);
 }
 
 // Favorites functionality
@@ -151,11 +150,10 @@ $(".stories-list").on('click', ".star-icon", updateFavoritesListAndDisplay);
 
 async function updateFavoritesListAndDisplay(evt) {
   evt.preventDefault();
-  $('#star-button').toggleClass('bi-star bi-star-fill');
-  console.log("I am updateFavoritesListAndDisplay");
+
+  $(evt.target).toggleClass("bi-star bi-star-fill");
 
   const storyId = $(evt.target).closest("li").attr("id");
-  console.log("storyId", storyId);
 
   const title = $(evt.target)
     .parentsUntil("#all-stories-list")
