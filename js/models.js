@@ -206,6 +206,14 @@ class User {
     }
   }
 
+  async checkFavorites(selectedStory) {
+    const data = { token: currentUser.loginToken };
+    const response = await axios.get(`${BASE_URL}/users/${currentUser.username}`, data);
+    console.log(response.data.user.favorites);
+
+  }
+
+
   async addFavorite(selectedStory) {
     if (selectedStory instanceof Story) {
       const data = { token: currentUser.loginToken };
@@ -225,3 +233,7 @@ class User {
     }
   }
 }
+
+
+// let story = storyList.stories[0];   // grab first story on list
+// currentUser.addFavorite(story);
