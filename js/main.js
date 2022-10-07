@@ -19,7 +19,6 @@ const $navUserProfile = $("#nav-user-profile");
 const $navLogOut = $("#nav-logout");
 const $navSubmitStory = $("#nav-submit");
 const $navFavorites = $("#nav-favorites");
-const $starIcons = $('.star-icon');
 
 
 const $authorInput = $("#authorInput");
