@@ -117,36 +117,42 @@ function updateUIOnUserLogin() {
 
 // Favorites functionality
 async function addOrRemoveFavorites(data) {
-  const currFavorites = await currentUser.getFavorites();
-
-
+  let isAFavorite = false;
+  let storyToUnfavoriteIndex;
   const story = new Story(data);
-  console.log(story);
 
-  //for(currentUser.Favorites)
+  for (let i = 0; i < currentUser.favorites.length; i++) {
+    if (data.storyId === currentUser.favorites[i].storyId) {
+      isAFavorite = true; //the clicked story is already a favorite
+      storyToUnfavoriteIndex = i;
+      break;
+    }
+  }
 
-  if (currFavorites.includes(story.storyId)) {
+  if (isAFavorite) { //remove this from favorites list
     console.log("i am already favorite, so remove me!");
-    currentUser.removeFavorite(story);
-    removeFavoriteToUI(story);
-  } else {
-    console.log("i'm not a favorite yet, so add me!");
-    currentUser.addFavorite(story);
-    currentUser.favorites.push(story);
-    addFavoriteToUI();
+    currentUser.removeFavorite(story); //delete fav request to server
+    currentUser.favorites.splice(storyToUnfavoriteIndex, 1); //updates favorites array
+    updateFavoritesUI();
 
+  } else { //add this to the favorites list
+    console.log("i'm not a favorite yet, so add me!");
+    currentUser.addFavorite(story); //add fav request to server
+    currentUser.favorites.push(story); //updates favorites array
+    updateFavoritesUI();
   }
   return story;
 }
 
 
-$(".stories-list").on('click', $(".star-icon"), updateFavoritesListAndDisplay);
-
+$(".stories-list").on('click', ".star-icon", updateFavoritesListAndDisplay);
 
 async function updateFavoritesListAndDisplay(evt) {
   evt.preventDefault();
+  console.log("I am updateFavoritesListAndDisplay");
 
   const storyId = $(evt.target).closest("li").attr("id");
+  console.log("storyId", storyId);
 
   const title = $(evt.target)
     .parentsUntil("#all-stories-list")
@@ -169,28 +175,15 @@ async function updateFavoritesListAndDisplay(evt) {
 
   const data = { storyId: storyId, title: title, author: author, url: url, username: username, createdAt: createdAt };
 
-  const story = await addOrRemoveFavorites(data);
-
-
+  await addOrRemoveFavorites(data);
 }
 
-
-
-async function addFavoriteToUI() {
+function updateFavoritesUI() {
   for (let story of currentUser.favorites) {
     const $story = generateStoryMarkup(story);
     $allFavoritesList.append($story);
   }
-
-  // const $favoriteStory = generateStoryMarkup(story);
-  // $allFavoritesList.append($favoriteStory);
-
-}
-
-async function removeFavoriteToUI(story) {
-  const $unfavoritedStory = $allFavoritesList.find(`${story.storyId}`);
-  $allFavoritesList.remove($unfavoritedStory);
-
+  // $allFavoritesList.show();
 }
 
 
