@@ -116,26 +116,81 @@ function updateUIOnUserLogin() {
 }
 
 // Favorites functionality
-async function updateUIonFavorites(evt) {
-  evt.preventDefault();
+async function addOrRemoveFavorites(data) {
   const currFavorites = await currentUser.getFavorites();
-  console.log(evt.target);
-  const storyId = $(evt.target).closest("li").attr("id");
-  console.log("storyid", storyId);
-  const title = $(evt.target).find(".story-link").first();
-  console.log("title", title);
-  // const author;
-  // const url;
-  // const username;
-  // const createdAt;
 
-  // const story = Story.newStory({});
-  //{storyId, title, author, url, username, createdAt}
-  if (currFavorites.includes(storyId)) {
-    console.log("i am already favorite");
-    // currentUser.removeFavorite();
+
+  const story = new Story(data);
+  console.log(story);
+
+  //for(currentUser.Favorites)
+
+  if (currFavorites.includes(story.storyId)) {
+    console.log("i am already favorite, so remove me!");
+    currentUser.removeFavorite(story);
+    removeFavoriteToUI(story);
   } else {
-    console.log("i'm not a favorite yet");
+    console.log("i'm not a favorite yet, so add me!");
+    currentUser.addFavorite(story);
+    currentUser.favorites.push(story);
+    addFavoriteToUI();
+
   }
+  return story;
 }
-$(".stories-list").on('click', $(".star-icon"), updateUIonFavorites);
+
+
+$(".stories-list").on('click', $(".star-icon"), updateFavoritesListAndDisplay);
+
+
+async function updateFavoritesListAndDisplay(evt) {
+  evt.preventDefault();
+
+  const storyId = $(evt.target).closest("li").attr("id");
+
+  const title = $(evt.target)
+    .parentsUntil("#all-stories-list")
+    .find(".story-link")[0].innerText;
+
+  const author = $(evt.target)
+    .parentsUntil("#all-stories-list")
+    .find(".story-author")[0].innerText.slice(3);
+
+  const url = $(evt.target)
+    .parentsUntil("#all-stories-list")
+    .find('.story-link').attr("href");
+
+  const username = $(evt.target)
+    .parentsUntil("#all-stories-list")
+    .find('.story-user')[0].innerText.slice(10);
+
+  let createdAt = new Date();
+  createdAt = createdAt.toISOString();
+
+  const data = { storyId: storyId, title: title, author: author, url: url, username: username, createdAt: createdAt };
+
+  const story = await addOrRemoveFavorites(data);
+
+
+}
+
+
+
+async function addFavoriteToUI() {
+  for (let story of currentUser.favorites) {
+    const $story = generateStoryMarkup(story);
+    $allFavoritesList.append($story);
+  }
+
+  // const $favoriteStory = generateStoryMarkup(story);
+  // $allFavoritesList.append($favoriteStory);
+
+}
+
+async function removeFavoriteToUI(story) {
+  const $unfavoritedStory = $allFavoritesList.find(`${story.storyId}`);
+  $allFavoritesList.remove($unfavoritedStory);
+
+}
+
+
