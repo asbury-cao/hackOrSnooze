@@ -210,17 +210,17 @@ class User {
     }
   }
 
-  async getFavorites(selectedStory) {
-    const data = { params: { token: currentUser.loginToken } };
-    const response = await axios.get(`${BASE_URL}/users/${currentUser.username}`, data);
-    const favorites = response.data.user.favorites;
-    const storyIdFavorites = favorites.map(favorite => {
-      const { storyId } = favorite;
-      return storyId;
-    });
-    return storyIdFavorites;
-    // console.log(storyIdFavorites);
-  }
+  // async getFavorites(selectedStory) {
+  //   const data = { params: { token: currentUser.loginToken } };
+  //   const response = await axios.get(`${BASE_URL}/users/${currentUser.username}`, data);
+  //   const favorites = response.data.user.favorites;
+  //   const storyIdFavorites = favorites.map(favorite => {
+  //     const { storyId } = favorite;
+  //     return storyId;
+  //   });
+  //   return storyIdFavorites;
+  // console.log(storyIdFavorites);
+  // }
 
 
   async addFavorite(selectedStory) {
