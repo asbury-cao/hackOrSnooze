@@ -26,6 +26,10 @@ class Story {
   getHostName() {
     return new URL(this.url).hostname;
   }
+
+  static newStory() {
+    return new Story;
+  }
 }
 
 
@@ -206,11 +210,16 @@ class User {
     }
   }
 
-  async checkFavorites(selectedStory) {
-    const data = { token: currentUser.loginToken };
+  async getFavorites(selectedStory) {
+    const data = { params: { token: currentUser.loginToken } };
     const response = await axios.get(`${BASE_URL}/users/${currentUser.username}`, data);
-    console.log(response.data.user.favorites);
-
+    const favorites = response.data.user.favorites;
+    const storyIdFavorites = favorites.map(favorite => {
+      const { storyId } = favorite;
+      return storyId;
+    });
+    return storyIdFavorites;
+    // console.log(storyIdFavorites);
   }
 
 
