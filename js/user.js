@@ -113,6 +113,8 @@ function updateUIOnUserLogin() {
   $signupForm.hide();
   $allStoriesList.show();
   updateNavOnLogin();
+  $starIcons.show();
+  console.log($starIcons);
 }
 
 // Favorites functionality
@@ -149,6 +151,7 @@ $(".stories-list").on('click', ".star-icon", updateFavoritesListAndDisplay);
 
 async function updateFavoritesListAndDisplay(evt) {
   evt.preventDefault();
+  $('#star-button').toggleClass('bi-star bi-star-fill');
   console.log("I am updateFavoritesListAndDisplay");
 
   const storyId = $(evt.target).closest("li").attr("id");
@@ -179,10 +182,12 @@ async function updateFavoritesListAndDisplay(evt) {
 }
 
 function updateFavoritesUI() {
+  $allFavoritesList.empty();
   for (let story of currentUser.favorites) {
     const $story = generateStoryMarkup(story);
     $allFavoritesList.append($story);
   }
+
   // $allFavoritesList.show();
 }
 
