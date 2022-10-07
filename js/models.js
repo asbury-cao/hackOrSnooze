@@ -27,9 +27,9 @@ class Story {
     return new URL(this.url).hostname;
   }
 
-  static newStory() {
-    return new Story;
-  }
+  // static newStory() {
+  //   return new Story;
+  // }
 }
 
 
