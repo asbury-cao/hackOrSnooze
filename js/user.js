@@ -120,8 +120,7 @@ function updateUIOnUserLogin() {
 async function addOrRemoveFavorites(data) {
   let isAFavorite = false;
   let storyToUnfavoriteIndex;
-  const story = new Story(data);
-
+  //TODO: use findIndex() array method instead
   for (let i = 0; i < currentUser.favorites.length; i++) {
     if (data.storyId === currentUser.favorites[i].storyId) {
       isAFavorite = true; //the clicked story is already a favorite
@@ -129,6 +128,8 @@ async function addOrRemoveFavorites(data) {
       break;
     }
   }
+
+  const story = new Story(data);
 
   if (isAFavorite) { //remove this from favorites list
     console.log("i am already favorite, so remove me!");
@@ -174,6 +175,7 @@ async function updateFavoritesListAndDisplay(evt) {
   let createdAt = new Date();
   createdAt = createdAt.toISOString();
 
+  //TODO: shorten line length of code
   const data = { storyId: storyId, title: title, author: author, url: url, username: username, createdAt: createdAt };
 
   await addOrRemoveFavorites(data);
