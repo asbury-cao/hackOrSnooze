@@ -27,8 +27,8 @@ class Story {
     return new URL(this.url).hostname;
   }
 
-  // static newStory() {
-  //   return new Story;
+  // static async getStory() {
+  //   const response = await axios.get(`${BASE_URL}/stories/${this.storyId}`);
   // }
 }
 
@@ -224,24 +224,22 @@ class User {
 
 
   async addFavorite(selectedStory) {
-    if (selectedStory instanceof Story) {
-      const data = { token: currentUser.loginToken };
-      const response = await axios.post(
-        `${BASE_URL}/users/${currentUser.username}/favorites/${selectedStory.storyId}`, data
-      );
-      console.log(response.data);
-    }
+    const data = { token: currentUser.loginToken };
+    const response = await axios.post(
+      `${BASE_URL}/users/${currentUser.username}/favorites/${selectedStory.storyId}`, data
+    );
+    console.log(response.data);
   }
 
+
   async removeFavorite(selectedStory) {
-    if (selectedStory instanceof Story) {
-      const data = { data: { token: currentUser.loginToken } };
-      const response = await axios.delete(
-        `${BASE_URL}/users/${currentUser.username}/favorites/${selectedStory.storyId}`, data
-      );
-    }
+    const data = { data: { token: currentUser.loginToken } };
+    const response = await axios.delete(
+      `${BASE_URL}/users/${currentUser.username}/favorites/${selectedStory.storyId}`, data
+    );
   }
 }
+
 
 
 // let story = storyList.stories[0];   // grab first story on list
